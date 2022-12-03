@@ -3,22 +3,18 @@ package main
 import (
 	"bufio"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
 
-type Problem1A struct {
+type Problem1B struct {
 
 }
 
-type FoodHolder struct {
-	TotalCalories int;
-	Records 	  int;
-	ElfNum		  int;
-}
 
-func (this *Problem1A) Solve() {
-	Log.Info("Problem 1A solver beginning!")
+func (this *Problem1B) Solve() {
+	Log.Info("Problem 1B solver beginning!")
 
 
 	file, err := os.Open("source-data/input-day-01a.txt");
@@ -57,11 +53,12 @@ func (this *Problem1A) Solve() {
 	if(elf != nil && elf.Records > 0){
 		elves = append(elves, elf);
 	}
-	peakCalories := 0;
-	for _, e := range elves {
-		if(e.TotalCalories > peakCalories){
-			peakCalories = e.TotalCalories;
-		}
+	sort.SliceStable(elves, func(i, j int) bool {
+		return elves[i].TotalCalories > elves[j].TotalCalories;
+	});
+	sumCalories := 0;
+	for i := 0; i < 3; i++ {
+		sumCalories += elves[i].TotalCalories;
 	}
-	Log.Info("Found peak calories %d", peakCalories);
+	Log.Info("Top 3 Calories Sum - %d", sumCalories)
 }
