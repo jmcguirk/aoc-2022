@@ -103,10 +103,10 @@ func (this *Problem3B) Solve() {
 }
 
 func (this *Problem3B) GetPriority(val int) int {
-	if(val >= int('a')){
-		pivot := int('a');
+	pivot := int('a');
+	if(val >= pivot){
 		return (val - pivot) + 1;
 	}
-	pivot := int('A');
+	pivot = int('A');
 	return (val - pivot) + 27;
 }
